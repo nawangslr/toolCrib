@@ -107,7 +107,7 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="tgl_pinjam">Waktu Pinjam</label>
-                            <input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" value="{{ $pinjam_koin->from_date }}" required autofocus readonly>
+                            <input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" required autofocus readonly>
                         </div>
                         <div class="form-group">
                             <label for="no_koin">No. Koin</label>
@@ -121,7 +121,7 @@
                                         <!-- <input type="text" class="form-control" id="no_alat" placeholder="Contoh: CT-001" name="no_alat" onmouseover="this.focus()" required autofocus>-->
                                         <select class="form-control" id="no_alat" name="no_alat" required autofocus>
                                             @foreach($peralatan as $alat)
-                                                <option id="{{$alat->no_alat}}"
+                                                <option id="alat-{{$alat->id}}" value="{{$alat->id}}" 
                                                         data-nama="{{$alat->nama_alat}}" 
                                                         data-status="{{$alat->status}}"  
                                                         data-kondisi="{{$alat->kondisi_akhir}}">{{ $alat->no_alat }}</option>
@@ -191,6 +191,23 @@
                 </div>
             </div>
         </div> 
+
+<script type="text/javascript">
+    window.onload = function(){
+        alert('oy');
+          //select pinjam koin
+          $("#no_alat").change(function () {
+            var ambilNama = $("#alat-"+this.value).data('nama');
+            var ambilStatus = $("#alat-"+this.value).data('status');
+            var ambilKondisi = $("#alat-"+this.value).data('kondisi');
+
+            $("#nama_alat").val(ambilNama);
+            $("#status").val(ambilStatus);
+            $("#kondisi").val(ambilKondisi);
+          });
+
+    }
+</script>
 
        
         <!-- /.content -->
