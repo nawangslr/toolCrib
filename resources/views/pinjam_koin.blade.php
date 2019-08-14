@@ -33,7 +33,7 @@
                                 <h4>Data Peminjaman <b>Sistem Koin</b></h4>
                             </div>
                             <div class="col-6" style="padding-top: 10px">
-                                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Pinjam Alat</button> 
+                                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModal" id="btn_pinjam">Pinjam Alat</button> 
                             </div>
                         </div>  
                       </div>
@@ -54,6 +54,7 @@
                                         <th>Nama Petugas</th>
                                         <th>Total Jam Pinjam</th>
                                         <th>Total Menit Pinjam</th>
+                                        <th>Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -73,10 +74,10 @@
                                             <td>{{ $pinjam_koin->total_jam_pinjam }}</td>
                                             <td>{{ $pinjam_koin->total_menit_pinjam }}</td>
                                             <td>
-                                                <form action="{{ route('pinjam_koin.destroy', $pinjam_koin->no_alat) }}" method="post">
+                                                <form action="{{ route('pinjam_koin.destroy', $pinjam_koin->id) }}" method="post">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
-                                                    <a href="{{ route('pinjam_koin.edit', $pinjam_koin->no_alat) }}" class=" btn btn-sm btn-warning btn-block">Kembalikan</a> <hr>
+                                                    <a href="{{ route('pinjam_koin.edit', $pinjam_koin->id) }}" class=" btn btn-sm btn-warning btn-block" id="btn_kembali">Kembalikan</a> <hr>
                                                     <button class="btn btn-sm btn-danger btn-block" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">Hapus</button>
                                                 </form>
                                             </td>
@@ -103,88 +104,54 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                    <form action="{{ url('/pinjam_koinCreate') }}" method="post">
+                    <form action="{{ url('/pinjam_koinCreate') }}" method="post" id="form">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="tgl_pinjam">Waktu Pinjam</label>
-                            <input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" value="{{ $pinjam_koin->from_date }}" required autofocus readonly>
+                            <input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" required autofocus readonly>
+                            <!--<input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" value="{{ $pinjam_koin->from_date }}" required autofocus readonly>-->
                         </div>
                         <div class="form-group">
                             <label for="no_koin">No. Koin</label>
                             <input class="form-control" id="no_koin" placeholder="Contoh: M01-001" name="no_koin" onmouseover="this.focus()" required autofocus>
                         </div>
                         <div class="form-group">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-10 float-left">
-                                        <label for="no_alat">No. Alat</label>
-                                        <!-- <input type="text" class="form-control" id="no_alat" placeholder="Contoh: CT-001" name="no_alat" onmouseover="this.focus()" required autofocus>-->
-                                        <select class="form-control" id="no_alat" name="no_alat" required autofocus>
-                                            @foreach($peralatan as $alat)
-                                                <option id="{{$alat->no_alat}}"
-                                                        data-nama="{{$alat->nama_alat}}" 
-                                                        data-status="{{$alat->status}}"  
-                                                        data-kondisi="{{$alat->kondisi_akhir}}">{{ $alat->no_alat }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 float-right" style="padding-top: 35px">
-                                        <button id="cek" type="button" class="btn btn-sm btn-warning">Cek</button>
-                                    </div>
-                                </div>
-                                
-                                <div class="row my-3">
-                                    <div class="col-md-3 float-left ml-1">
-                                        <label for="nama_alat">Nama Alat</label>
-                                    </div>
-                                    <div class="col-md-12 float-right">
-                                        <input type="text" id="nama_alat" class="form-control" name="nama_alat" required autofocus>
-                                    </div>
-                                </div>
-
-                                <div class="row my-3">
-                                    <div class="col-md-3 float-left ml-1">
-                                        <label for="kondisi">Kondisi</label>
-                                    </div>
-                                    <div class="col-md-12 float-right">
-                                        <input type="text" id="kondisi" class="form-control" name="kondisi" required autofocus>
-                                    </div>
-                                </div>
-
-                                <div class="row my-3">
-                                    <div class="col-md-3 float-left ml-1">
-                                        <label for="status">Status</label>
-                                    </div>
-                                    <div class="col-md-12 float-right">
-                                        <input type="text" class="form-control" id="status" name="status" required autofocus>
-                                    </div>
-                                </div>
-                            </form>
+                            <label for="no_alat">No. Alat</label>
+                            <select class="form-control" id="no_alat" name="no_alat" required autofocus>
+                                @foreach($peralatan as $alat)
+                                <option id="alat-{{$alat->id}}" value="{{$alat->id}}" 
+                                        data-nama="{{$alat->nama_alat}}" 
+                                        data-status="{{$alat->status}}"  
+                                        data-kondisi="{{$alat->kondisi_akhir}}">{{ $alat->no_alat }}</option>
+                                @endforeach
+                                </select>
                         </div>
-                        
+                        <div class="form-group">
+                            <label for="nama_alat">Nama Alat</label>
+                            <input type="text" id="nama_alat" class="form-control" name="nama_alat" required autofocus readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="kondisi">Kondisi</label>
+                            <input type="text" id="kondisi" class="form-control" name="kondisi" required autofocus readonly>
+                        </div>                    
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" class="form-control" name="status" required autofocus>
+                                <option value="Sudah Dikembalikan">Sudah Dikembalikan</option>
+                                <option value="Dipinjam">Dipinjam</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea class="form-control" id="keterangan" placeholder="Berikan keterangan.." name="keterangan" required autofocus></textarea>
+                            <textarea class="form-control" id="keterangan" placeholder="Tulis sesuatu.." name="keterangan" required autofocus></textarea>
                         </div>
-                        
                         <div class="form-group">
                             <label for="nama_petugas">Nama Petugas</label>
                             <input type="text" class="form-control" id="nama_petugas" value=" {{Session::get('name')}} " name="nama_petugas" readonly required autofocus>
                         </div>
-                        
-                        <!-- <div class="form-group">
-                        <label for="nama_petugas">Petugas</label>
-                            <select id="nama_petugas" class="form-control">
-                                @foreach ($admin as $admins)
-                                <option value="{{ $admins->id }}"> {{ $admins->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>-->
-
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Pinjam Alat</button>
-                            <button type="reset" class="btn btn-secondary">Batalkan</button>
-                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button> -->
+                            <button type="submit" class="btn btn-primary" id="btn_pinjam">Pinjam Alat</button>
+                            <button class="btn btn-secondary" id="btn_batal">Batalkan</button>
                         </div>
                         </form>
                     </div>
@@ -192,7 +159,58 @@
             </div>
         </div> 
 
-       
+        <script type="text/javascript">
+            window.onload = function(){
+                alert('oy');
+
+                //select pinjam koin
+                $("#no_alat").change(function () {
+                    var ambilNama = $("#alat-"+this.value).data('nama');
+                    var ambilStatus = $("#alat-"+this.value).data('status');
+                    var ambilKondisi = $("#alat-"+this.value).data('kondisi');
+                    $("#nama_alat").val(ambilNama);
+                    $("#status").val(ambilStatus);
+                    $("#kondisi").val(ambilKondisi);
+
+                    if(ambilStatus === "Dipinjam" || ambilKondisi === "Rusak" ||| ambilKondisi === "Proses") {
+                        $("#status").prop("disabled", true);
+                        $("#btn_pinjam").prop("disabled", true);
+                    } else {
+                        $("#status").prop("disabled", false);
+                        $("#btn_pinjam").prop("disabled", false);
+                    }
+                });
+
+                $("#btn_batal").click(function () {
+                    $("#status").prop("disabled", false);
+                    $("#btn_pinjam").prop("disabled", false);
+                    $("#form")[0].reset();
+                    jDate();
+                });
+
+                $("#btn_pinjam").click(function () {              
+                    jDate();
+                });
+
+            }
+
+            function jDate() {
+                var hari = ['Ahad', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+                    var bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    var tanggal = new Date().getDate();
+                    var _hari = new Date().getDay();
+                    var _bulan = new Date().getMonth();
+                    var _tahun = new Date().getYear();
+                    var jam = new Date().getHours();
+                    var menit = new Date().getMinutes();
+                    var detik = new Date().getSeconds();
+                    var hari = hari[_hari];
+                    var bulan = bulan[_bulan];
+                    var tahun = (_tahun < 1000) ? _tahun + 1900 : _tahun;
+
+                    $("#tgl_pinjam").val(hari +', '+ tanggal +' '+ bulan +' '+ tahun +' '+ jam +':'+ menit +":"+ detik);
+            }
+        </script>
         <!-- /.content -->
     </section>
     <!-- /.main-section -->

@@ -42,15 +42,4 @@
     $("#jam_pakai").val("0"));
   });*/
 
-  //select pinjam koin
-  $("#no_alat").onchange(function () {
-    var ambilNama = $("#alat"+this.value).data('nama');
-    var ambilStatus = $("#alat"+this.value).data('status');
-    var ambilKondisi = $("#alat"+this.value).data('kondisi');
-
-    $("#nama_alat").val(ambilNama);
-    $("#status").val(ambilStatus);
-    $("#kondisi").val(ambilKondisi);
-  });
-
 })(jQuery); // End of use strict

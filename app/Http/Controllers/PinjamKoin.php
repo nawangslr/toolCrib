@@ -37,9 +37,11 @@ class PinjamKoin extends Controller
     public function pinjam_koinCreate(Request $request)
     {
         $data_pinjam_koin = new ModelPinjamKoin();
+        $data_peralatan = ModelAlat::find($request->no_alat);
+        
         $data_pinjam_koin->tgl_pinjam = $request->tgl_pinjam;
         $data_pinjam_koin->no_koin = $request->no_koin;
-        $data_pinjam_koin->no_alat = $request->no_alat;
+        $data_pinjam_koin->no_alat = $data_peralatan->no_alat;
         $data_pinjam_koin->nama_alat = $request->nama_alat;
         $data_pinjam_koin->tgl_kembali = $request->tgl_kembali;
         $data_pinjam_koin->kondisi = $request->kondisi;
@@ -49,6 +51,12 @@ class PinjamKoin extends Controller
         $data_pinjam_koin->total_jam_pinjam = $request->total_jam_pinjam;
         $data_pinjam_koin->total_menit_pinjam = $request->total_menit_pinjam;
         $data_pinjam_koin->save();
+        
+        $data_peralatan->kondisi_akhir = $request->kondisi;
+        $data_peralatan->status = $request->status;
+        $data_peralatan->nama_petugas = $request->nama_petugas;
+        $data_peralatan->save();
+        
         return redirect('pinjam_koin')->with('alert-success', 'Alat Telah Dipinjam.');
     }
 
@@ -80,11 +88,12 @@ class PinjamKoin extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($no_alat)
+    public function edit($id)
     {
-        $data_pinjam_koin = ModelPinjamKoin::where('no_alat', $no_alat)->get();
+        $data_pinjam_koin = ModelPinjamKoin::where('id', $id)->get();
         $selectedStatus = ModelPinjamKoin::first()->no_alat;
-        return view('kembali_koin', compact('data_pinjam_koin', 'selectedStatus'));
+
+        return view('kembali_koin',compact('data_pinjam_koin', 'selectedStatus'));
     }
 
     /**
@@ -94,9 +103,13 @@ class PinjamKoin extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $no_alat)
+    public function update(Request $request)
     {
-        $data_pinjam_koin = new ModelPinjamKoin();
+        $id = $request->input('id');
+        $no_alat = $request->input('no_alat');
+        $data_pinjam_koin = ModelPinjamKoin::where('id',$id)->first();
+        $data_peralatan = ModelAlat::where('no_alat',$no_alat)->first();
+
         $data_pinjam_koin->tgl_pinjam = $request->tgl_pinjam;
         $data_pinjam_koin->no_koin = $request->no_koin;
         $data_pinjam_koin->no_alat = $request->no_alat;
@@ -109,6 +122,12 @@ class PinjamKoin extends Controller
         $data_pinjam_koin->total_jam_pinjam = $request->total_jam_pinjam;
         $data_pinjam_koin->total_menit_pinjam = $request->total_menit_pinjam;
         $data_pinjam_koin->save();
+
+        $data_peralatan->kondisi_akhir = $request->kondisi;
+        $data_peralatan->status = $request->status;
+        $data_peralatan->nama_petugas = $request->nama_petugas;
+        $data_peralatan->save();
+
         return redirect()->route('pinjam_koin.index')->with('alert-success', 'Alat Telah Dikembalikan.');
     }
 
@@ -118,9 +137,9 @@ class PinjamKoin extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($no_alat)
+    public function destroy($id)
     {
-        $data_pinjam_koin = ModelPinjamKoin::where('no_alat', $no_alat)->first();
+        $data_pinjam_koin = ModelPinjamKoin::where('id', $id)->first();
         $data_pinjam_koin->delete();
         return redirect()->route('pinjam_koin.index')->with('alert-success','Data Peminjaman Telah Dihapus!');
     }

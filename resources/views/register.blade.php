@@ -119,7 +119,7 @@
             <form action="{{ url('/registerPost') }}" method="post" class="form-signin">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <img class="profile-image" src="/icon/logopolman.png" alt="">
+                    <img class="profile-image" src="/icon/iconpolman.png" alt="">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus><br>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password" required><br>
                     <input type="password" class="form-control" id="confirmation" name="confirmation" placeholder="Konfirmasi Password" required><br>
