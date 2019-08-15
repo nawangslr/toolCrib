@@ -7,7 +7,7 @@
             <!-- Remove This Before You Start -->
             <div id="content-wrapper">
                 @foreach($data_pinjam_koin as $pinjam_koin)
-                    <form action="{{ route('pinjam_koin.update', $pinjam_koin->no_alat) }}" method="post">
+                    <form action="{{ route('pinjam_koin.update', $pinjam_koin->no_alat) }}" id="form_edit" method="post">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                        
@@ -101,6 +101,12 @@
                     $("#btn_kembalikan").prop("disabled", false);
                     $("#status").prop("disabled", false);
                 }
+
+                $("#form_edit").submit(function(){
+                    var id = {{ $id }};
+                    $(this).append("<input type='hidden' name='id' value='"+ id +"'/>");
+                });
+
             }
 
             function jDate() {
