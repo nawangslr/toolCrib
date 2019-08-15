@@ -57,7 +57,7 @@
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="nc-icon x2 nc-bullet-list-67"></i>
     </button>
-    <a class="navbar-brand mr-1 text-white btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle"><h3>Tool Crib <b>AE</b></h3></a>
+    <a class="navbar-brand mr-1 text-white btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="http://ae.polman-bandung.ac.id/"><h3>Tool Crib <b>AE</b></h3></a>
 
     <!-- Navbar Search -->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-1 bg-secondary"> 
