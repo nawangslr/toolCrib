@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddJamPakaiOnAlatTable extends Migration
+class AddAlatIdOnTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddJamPakaiOnAlatTable extends Migration
      */
     public function up()
     {
-        Schema::table('alat', function (Blueprint $table) {
-            $table->integer('kalibrasi')->nullable()->after('status');
+        Schema::table('pinjam_koin', function (Blueprint $table) {
+        $table->string('alat_id')->nullable()->after('id');
         });
     }
 
@@ -25,7 +25,8 @@ class AddJamPakaiOnAlatTable extends Migration
      */
     public function down()
     {
-        Schema::table('alat', function (Blueprint $table) {            
+        Schema::table('pinjam_koin', function (Blueprint $table) {
+            //
         });
     }
 }

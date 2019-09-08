@@ -20,7 +20,8 @@ class PinjamKoin extends Controller
         $data_pinjam_koin = ModelPinjamKoin::all();
         $admin = ModelUser::all();
         $peralatan = ModelAlat::all();
-        return view('pinjam_koin', compact('data_pinjam_koin','admin','peralatan'));
+        $peminjaman = ModelPeminjam::all();
+        return view('pinjam_koin', compact('data_pinjam_koin','admin','peralatan','peminjaman'));
     }
 
     /*public function getDateAttribute()
@@ -38,9 +39,11 @@ class PinjamKoin extends Controller
     {
         $data_pinjam_koin = new ModelPinjamKoin();
         $data_peralatan = ModelAlat::find($request->no_alat);
+        $data_peminjam = ModelPeminjam::find($request->no_koin);
         
         $data_pinjam_koin->tgl_pinjam = $request->tgl_pinjam;
-        $data_pinjam_koin->no_koin = $request->no_koin;
+        $data_pinjam_koin->no_koin = $data_peminjam->no_koin;
+        $data_pinjam_koin->alat_id = $request->no_alat;
         $data_pinjam_koin->no_alat = $data_peralatan->no_alat;
         $data_pinjam_koin->nama_alat = $request->nama_alat;
         $data_pinjam_koin->tgl_kembali = $request->tgl_kembali;
@@ -55,6 +58,7 @@ class PinjamKoin extends Controller
         $data_peralatan->kondisi_akhir = $request->kondisi;
         $data_peralatan->status = $request->status;
         $data_peralatan->nama_petugas = $request->nama_petugas;
+        $data_peralatan->kalibrasi = $request->total_jam_pinjam;
         $data_peralatan->save();
         
         return redirect('pinjam_koin')->with('alert-success', 'Alat Telah Dipinjam.');
@@ -109,10 +113,8 @@ class PinjamKoin extends Controller
         $id = $request->input('id');
         $no_alat = $request->input('no_alat');
         $data_pinjam_koin = ModelPinjamKoin::find($id);
-        // $data_peralatan = ModelAlat::find($data_pinjam_koin->alat_id);
-
-        // dd($id);
-
+        $data_peralatan = ModelAlat::find($data_pinjam_koin->alat_id);
+        
         $data_pinjam_koin->tgl_pinjam = $request->tgl_pinjam;
         $data_pinjam_koin->no_koin = $request->no_koin;
         $data_pinjam_koin->no_alat = $request->no_alat;
@@ -122,14 +124,15 @@ class PinjamKoin extends Controller
         $data_pinjam_koin->keterangan = $request->keterangan;
         $data_pinjam_koin->status = $request->status;
         $data_pinjam_koin->nama_petugas = $request->nama_petugas;
-        $data_pinjam_koin->total_jam_pinjam = $request->total_jam_pinjam;
+        $data_pinjam_koin->total_jam_pinjam = $request->total_menit_pinjam;
         $data_pinjam_koin->total_menit_pinjam = $request->total_menit_pinjam;
         $data_pinjam_koin->save();
 
-        // $data_peralatan->kondisi_akhir = $request->kondisi;
-        // $data_peralatan->status = $request->status;
-        // $data_peralatan->nama_petugas = $request->nama_petugas;
-        // $data_peralatan->save();
+        $data_peralatan->kondisi_akhir = $request->kondisi;
+        $data_peralatan->status = $request->status;
+        $data_peralatan->nama_petugas = $request->nama_petugas;
+        $data_peralatan->kalibrasi = $request->total_menit_pinjam;
+        $data_peralatan->save();
 
         return redirect()->route('pinjam_koin.index')->with('alert-success', 'Alat Telah Dikembalikan.');
     }

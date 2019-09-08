@@ -19,12 +19,28 @@
 
     <!-- Custom styles for this template-->
     <link href="/dashboard_assets/sb-admin.css" rel="stylesheet">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     
     <style>
       .profile-image {
         width: 45px;
         height: 45px;
         margin-left: 1.5rem;
+        display: block;
+        -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+      }
+      .profile-table {
+        width: 150px;
+        height: 150px;
+        object-fit: scale-down;
+      }
+      .polman-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
         display: block;
         -webkit-box-sizing: border-box;
           -moz-box-sizing: border-box;
@@ -38,6 +54,30 @@
           -moz-box-sizing: border-box;
           box-sizing: border-box;
         align: right;
+      }
+      .img-contoh {
+        border: 10px;
+        solid: #ffffff;
+        outline: 1px;
+        margin: 0 auto;
+        scale: 0;
+        width: 600px;
+        height: 300px;
+        display: block;
+      }
+      .img-zoom {
+        width: 350px;
+        height: 200px;
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+      }
+      .transisi {
+          -webkit-transform: scale(1.8); 
+          -moz-transform: scale(1.8);
+          -o-transform: scale(1.8);
+          transform: scale(1.8);
       }
     </style>
 
@@ -74,6 +114,8 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
           <a class="dropdown-item" href="/home_user">Profil</a>
+          <a class="dropdown-item" href="/bantuan">Bantuan</a>
+          <a class="dropdown-item" href="/tentang">Tentang</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
@@ -100,7 +142,7 @@
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <a class="dropdown-item " href="/pinjam_koin">Sistem Koin</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item " href="#">Sistem KTM</a>
+            <a class="dropdown-item " href="/pinjam_ktm">Sistem KTM</a>
           </div>
           <!--<div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Data Peminjaman</h6>
@@ -120,9 +162,16 @@
           <span>Data Peminjam</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="nc-icon lg nc-notes"></i>
           <span>Laporan</span></a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <h6 class="dropdown-header">Pinjam & Kembali</h6>
+          <a class="dropdown-item" href="/laporan_pinjam_koin">Sistem Koin</a>
+          <a class="dropdown-item" href="/laporan_pinjam_ktm">Sistem KTM</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/laporan_inventaris">Inventaris Alat</a>
+        </div>
       </li>
     </ul>
 
@@ -131,13 +180,13 @@
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
+        <!--<ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="/home_user">Profil</a>
           </li>
-          <li class="breadcrumb-item active">Tentang</li>
-          <li class="breadcrumb-item active">Bantuan</li>
-        </ol>
+          <li class="breadcrumb-item"><a href="/tentang">Tentang</a></li>
+          <li class="breadcrumb-item"><a href="/bantuan">Bantuan</a></li>
+        </ol> -->
 
       <!-- /.container-fluid -->
 
@@ -147,6 +196,7 @@
           <div class="copyright text-center my-auto text-muted">
             <span>Copyright © Tool Crib AE </span>
             <script>document.write(new Date().getFullYear())</script>
+            <span>| </span>
             <a href="https://sttbandung.ac.id/">Magang STTB</a>, made with love for a better web.
           </div>
         </div>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddJamPakaiOnAlatTable extends Migration
+class AddKategoriOnAlatTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddJamPakaiOnAlatTable extends Migration
     public function up()
     {
         Schema::table('alat', function (Blueprint $table) {
-            $table->integer('kalibrasi')->nullable()->after('status');
-        });
+            $table->string('kategori')->nullable()->after('kalibrasi');
+            });
     }
 
     /**
@@ -25,7 +25,8 @@ class AddJamPakaiOnAlatTable extends Migration
      */
     public function down()
     {
-        Schema::table('alat', function (Blueprint $table) {            
+        Schema::table('alat', function (Blueprint $table) {
+            //
         });
     }
 }

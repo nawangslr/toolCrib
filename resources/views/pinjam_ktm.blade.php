@@ -30,7 +30,7 @@
                                 <img class="profile-image" id="sidebarToggle" href="#" src="/icon/iconpolman.png" alt="">
                             </div>
                             <div class="col-5 text-dark float-left" style="padding-top: 10px">
-                                <h4>Data Peminjaman <b>Sistem Koin</b></h4>
+                                <h4>Data Peminjaman <b>Sistem KTM</b></h4>
                             </div>
                             <div class="col-6" style="padding-top: 10px">
                                 <button type="button" class="btn btn-primary btn-md float-right" data-toggle="modal" data-target="#exampleModal" id="btn_pinjam_alat">Pinjam Alat</button> 
@@ -44,7 +44,7 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Waktu Pinjam</th>
-                                        <th>No. Koin</th>
+                                        <th>No. KTM</th>
                                         <th>No. Alat</th>
                                         <th>Nama Alat</th>
                                         <th>Waktu Kembali</th>
@@ -52,30 +52,30 @@
                                         <th>Keterangan</th>
                                         <th>Status</th>
                                         <th>Nama Petugas</th>
-                                        <th>Kalibrasi</th>
+                                        <th>Kalibrasi</th>                                        
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @php $id = 1; @endphp
-                                    @foreach($data_pinjam_koin as $pinjam_koin)
+                                    @foreach($data_pinjam_ktm as $pinjam_ktm)
                                         <tr>
                                             <td>{{ $id++ }}</td>
-                                            <td>{{ $pinjam_koin->tgl_pinjam }}</td>
-                                            <td>{{ $pinjam_koin->no_koin }}</td>
-                                            <td>{{ $pinjam_koin->no_alat }}</td>
-                                            <td>{{ $pinjam_koin->nama_alat }}</td>
-                                            <td>{{ $pinjam_koin->tgl_kembali }}</td>
-                                            <td>{{ $pinjam_koin->kondisi }}</td>
-                                            <td>{{ $pinjam_koin->keterangan }}</td>
-                                            <td>{{ $pinjam_koin->status }}</td>
-                                            <td>{{ $pinjam_koin->nama_petugas }}</td>
-                                            <td>{{ $pinjam_koin->total_jam_pinjam }}</td>
+                                            <td>{{ $pinjam_ktm->tgl_pinjam }}</td>
+                                            <td>{{ $pinjam_ktm->no_koin }}</td>
+                                            <td>{{ $pinjam_ktm->no_alat }}</td>
+                                            <td>{{ $pinjam_ktm->nama_alat }}</td>
+                                            <td>{{ $pinjam_ktm->tgl_kembali }}</td>
+                                            <td>{{ $pinjam_ktm->kondisi }}</td>
+                                            <td>{{ $pinjam_ktm->keterangan }}</td>
+                                            <td>{{ $pinjam_ktm->status }}</td>
+                                            <td>{{ $pinjam_ktm->nama_petugas }}</td>
+                                            <td>{{ $pinjam_ktm->total_jam_pinjam }}</td>
                                             <td>
-                                                <form action="{{ route('pinjam_koin.destroy', $pinjam_koin->id) }}" method="post">
+                                                <form action="{{ route('pinjam_ktm.destroy', $pinjam_ktm->id) }}" method="post">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
-                                                    <a href="{{ route('pinjam_koin.edit', $pinjam_koin->id) }}" class=" btn btn-sm btn-warning btn-block" id="btn_kembali">Kembalikan</a> <hr>
+                                                    <a href="{{ route('pinjam_ktm.edit', $pinjam_ktm->id) }}" class=" btn btn-sm btn-warning btn-block" id="btn_kembali">Kembalikan</a> <hr>
                                                     <button class="btn btn-sm btn-danger btn-block" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">Hapus</button>
                                                 </form>
                                             </td>
@@ -102,17 +102,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                    <form action="{{ url('/pinjam_koinCreate') }}" method="post" id="form">
+                    <form action="{{ url('/pinjam_ktmCreate') }}" method="post" id="form">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="tgl_pinjam">Waktu Pinjam</label>
                             <input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" required readonly>
                         </div>
                         <div class="form-group">
-                            <label for="no_koin">No. Koin</label>
+                            <label for="no_koin">No. Induk</label>
                             <select class="form-control" id="no_koin" name="no_koin" required autofocus>
                                 @foreach($peminjaman as $peminjam)
-                                <option id="koin-{{$peminjam->id}}" value="{{$peminjam->id}}">{{ $peminjam->no_koin }}</option>
+                                <option id="koin-{{$peminjam->id}}" value="{{$peminjam->id}}">{{ $peminjam->no_induk }}</option>
                                 @endforeach
                                 </select>
                         </div>
@@ -170,7 +170,7 @@
             window.onload = function(){
                 //alert('oy');
 
-                //select pinjam koin
+                //select pinjam ktm
                 $("#no_alat").change(function () {
                     var ambilNama = $("#alat-"+this.value).data('nama');
                     var ambilStatus = $("#alat-"+this.value).data('status');
@@ -184,7 +184,7 @@
                     var i= $("#total_jam_pinjam").val();
                     var result=parseInt(i)+1;
                     $("#total_menit_pinjam").val(result);
-                    
+
                     if(ambilStatus === "Dipinjam") {
                         $("#btn_pinjam").prop("disabled", true);
                         $("#status").prop("disabled", true);
@@ -199,7 +199,7 @@
                         $("#status").prop("disabled", true);
                     } else if(ambilKondisi === "PROSES") {
                         $("#btn_pinjam").prop("disabled", true);
-                        $("#status").prop("disabled", true);
+                        $("#status").prop("disabled", true);                        
                     } else if(ambilKalibrasi === 125) {
                         $("#btn_pinjam").prop("disabled", true);
                         $("#status").prop("disabled", true);
@@ -220,7 +220,6 @@
                 $("#btn_pinjam_alat").click(function () {              
                     jDate();
                 });
-
             }
 
             function jDate() {

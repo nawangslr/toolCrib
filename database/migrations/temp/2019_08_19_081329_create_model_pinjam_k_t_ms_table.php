@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModelPeminjamsTable extends Migration
+class CreateModelPinjamKTMsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateModelPeminjamsTable extends Migration
      */
     public function up()
     {
-        /*Schema::create('peminjam', function (Blueprint $table) {
+        Schema::create('pinjam_ktm', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('alat_id');
             $table->string('tgl_pinjam');
             $table->string('no_koin');
             $table->string('no_alat');
@@ -23,15 +24,11 @@ class CreateModelPeminjamsTable extends Migration
             $table->string('kondisi');
             $table->string('keterangan');
             $table->string('status');
-            $table->string('tahun_pinjam');
-            $table->string('bulan_pinjam');
-            $table->string('hari_pinjam');
-            $table->string('jam_pinjam');
-            $table->string('menit_pinjam');
-            $table->string('jmlhjam_pinjam');
-            $table->string('jmlhmenit_pinjam');
+            $table->string('nama_petugas');
+            $table->integer('total_jam_pinjam');
+            $table->integer('total_menit_pinjam');
             $table->timestamps();
-        });*/
+        });
     }
 
     /**
@@ -41,6 +38,6 @@ class CreateModelPeminjamsTable extends Migration
      */
     public function down()
     {
-        /*Schema::dropIfExists('peminjam');*/
+        Schema::dropIfExists('pinjam_ktm');
     }
 }

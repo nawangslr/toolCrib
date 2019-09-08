@@ -33,7 +33,7 @@
                                 <h4>Data <b>Alat</b></h4>
                             </div>
                             <div class="col-6" style="padding-top: 10px">
-                                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Tambah Data</button> 
+                                <button type="button" class="btn btn-primary btn-md float-right" data-toggle="modal" data-target="#exampleModal">Tambah Data</button> 
                             </div>
                         </div>  
                       </div>
@@ -42,7 +42,7 @@
                                 <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>No.</th>
                                         <th>No. Alat</th>
                                         <th>No. Lemari</th>
                                         <th>No. Seri</th>
@@ -54,7 +54,7 @@
                                         <th>Kondisi Akhir</th>
                                         <th>Nama Petugas</th>
                                         <th>Status</th>
-                                        <th>Total Jam Pakai</th>
+                                        <th>Kalibrasi</th>
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
@@ -74,12 +74,12 @@
                                             <td>{{ $alat->kondisi_akhir }}</td>
                                             <td>{{ $alat->nama_petugas }}</td>
                                             <td>{{ $alat->status }}</td>
-                                            <td>{{ $alat->jam_pakai }}</td>
+                                            <td>{{ $alat->kalibrasi }}</td>
                                             <td>
                                                 <form action="{{ route('alat.destroy', $alat->no_alat) }}" method="post">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
-                                                    <a href="{{ route('alat.edit',$alat->no_alat) }}" class=" btn btn-sm btn-warning btn-block">Edit</a> <hr>
+                                                    <a href="{{ route('alat.edit',$alat->no_alat) }}" class=" btn btn-sm btn-warning btn-block">Ubah</a> <hr>
                                                     <button class="btn btn-sm btn-danger btn-block" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data?')">Hapus</button>
                                                 </form>
                                             </td>
@@ -109,31 +109,31 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="no_alat">No. Alat</label>
-                            <input type="text" class="form-control" id="no_alat" placeholder="Contoh: CT-001" name="no_alat" onmouseover="this.focus()" required autofocus>
+                            <input type="text" class="form-control" id="no_alat" placeholder="Contoh: CT-001" name="no_alat" required autofocus>
                         </div>
                         <div class="form-group">
                             <label for="no_lemari">No. Lemari</label>
-                            <input type="text" class="form-control" id="no_lemari" placeholder="Contoh: 71" name="no_lemari" required autofocus>
+                            <input type="text" class="form-control" id="no_lemari" placeholder="Contoh: 71" name="no_lemari" required>
                         </div>
                         <div class="form-group">
                             <label for="no_seri">No. Seri</label>
-                            <input type="text" class="form-control" id="no_seri" placeholder="Contoh: EI853256" name="no_seri" required autofocus>
+                            <input type="text" class="form-control" id="no_seri" placeholder="Contoh: EI853256" name="no_seri" required>
                         </div>
                         <div class="form-group">
                             <label for="nama_alat">Nama Alat</label>
-                            <input type="text" class="form-control" id="nama_alat" placeholder="Contoh: Curve Tracer" name="nama_alat" required autofocus>
+                            <input type="text" class="form-control" id="nama_alat" placeholder="Contoh: Curve Tracer" name="nama_alat" required>
                         </div>
                         <div class="form-group">
                             <label for="tipe_alat">Tipe Alat</label>
-                            <input type="text" class="form-control" id="tipe_alat" placeholder="Contoh: LTC-905" name="tipe_alat" required autofocus>
+                            <input type="text" class="form-control" id="tipe_alat" placeholder="Contoh: LTC-905" name="tipe_alat" required>
                         </div>
                         <div class="form-group">
                             <label for="merk">Merk</label>
-                            <input type="text" class="form-control" id="merk" placeholder="Contoh: Leader" name="merk" required autofocus>
+                            <input type="text" class="form-control" id="merk" placeholder="Contoh: Leader" name="merk" required>
                         </div>
                         <div class="form-group">
                             <label for="kondisi_awal">Kondisi Awal</label>
-                            <select class="form-control" id="kondisi_awal" name="kondisi_awal" required autofocus>
+                            <select class="form-control" id="kondisi_awal" name="kondisi_awal" required>
                             <option>Bagus</option>
                             <option>Proses</option>
                             <option>Rusak</option>
@@ -141,11 +141,11 @@
                         </div>
                         <div class="form-group">
                             <label for="tgl_inventaris">Tanggal Inventaris</label>
-                            <input type="date" class="form-control" id="tgl_inventaris" name="tgl_inventaris" required autofocus>
+                            <input type="date" class="form-control" id="tgl_inventaris" name="tgl_inventaris" required>
                         </div>
                         <div class="form-group">
                             <label for="kondisi_akhir">Kondisi Akhir</label>
-                            <select class="form-control" id="kondisi_akhir" name="kondisi_akhir" required autofocus>
+                            <select class="form-control" id="kondisi_akhir" name="kondisi_akhir" required>
                             <option>Bagus</option>
                             <option>Proses</option>
                             <option>Rusak</option>
@@ -153,7 +153,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nama_petugas">Nama Petugas</label>
-                            <input type="text" class="form-control" id="nama_petugas" value=" {{Session::get('name')}} " name="nama_petugas" readonly required autofocus>
+                            <input type="text" class="form-control" id="nama_petugas" value=" {{Session::get('name')}} " name="nama_petugas" readonly required>
                         </div>
                         
                         <!-- <div class="form-group">
@@ -167,14 +167,14 @@
 
                         <div class="form-group">
                             <label for="status">Status</label>
-                            <select class="form-control" id="status" name="status" required autofocus>
+                            <select class="form-control" id="status" name="status" required>
                             <option>Sudah Dikembalikan</option>
                             <option>Dipinjam</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="merk">Total Jam Pakai</label>
-                            <input type="text" class="form-control" id="jam_pakai" placeholder="0" name="jam_pakai" required autofocus>                            
+                            <label for="kalibrasi">Kalibrasi</label>
+                            <input type="number" class="form-control" id="kalibrasi" placeholder="0" name="kalibrasi" required>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Tambah Data</button>
@@ -186,6 +186,7 @@
                 </div>
             </div>
         </div> 
+
         <!-- /.content -->
     </section>
     <!-- /.main-section -->

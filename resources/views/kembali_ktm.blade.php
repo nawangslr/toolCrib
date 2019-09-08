@@ -6,43 +6,43 @@
         <div class="content">
             <!-- Remove This Before You Start -->
             <div id="content-wrapper">
-                @foreach($data_pinjam_koin as $pinjam_koin)
-                    <form action="{{ route('pinjam_koin.update', $pinjam_koin->no_alat) }}" id="form_edit" method="post">
+                @foreach($data_pinjam_ktm as $pinjam_ktm)
+                    <form action="{{ route('pinjam_ktm.update', $pinjam_ktm->no_alat) }}" id="form_edit" method="post">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                        
                         <div class="form-group">
                             <label for="tgl_pinjam">Waktu Pinjam</label>
-                            <input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" value="{{ $pinjam_koin->tgl_pinjam }}" required readonly>
+                            <input class="form-control" id="tgl_pinjam"  name="tgl_pinjam" value="{{ $pinjam_ktm->tgl_pinjam }}" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="tgl_kembali">Waktu Kembali</label>
                             <input class="form-control" id="tgl_kembali"  name="tgl_kembali" required readonly>
                         </div>
                         <div class="form-group">
-                            <label for="no_koin">No. Koin</label>
-                            <input type="text" class="form-control" id="no_koin" value="{{ $pinjam_koin->no_koin }}" name="no_koin" required readonly>
+                            <label for="no_koin">No. KTM</label>
+                            <input type="text" class="form-control" id="no_koin" value="{{ $pinjam_ktm->no_koin }}" name="no_koin" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="no_alat">No. Alat</label>
-                            <input type="text" class="form-control" id="no_alat" value="{{ $pinjam_koin->no_alat }}" name="no_alat" required readonly>
+                            <input type="text" class="form-control" id="no_alat" value="{{ $pinjam_ktm->no_alat }}" name="no_alat" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="nama_alat">Nama Alat</label>
-                            <input type="text" class="form-control" id="nama_alat" value="{{ $pinjam_koin->nama_alat }}" name="nama_alat" required readonly>
+                            <input type="text" class="form-control" id="nama_alat" value="{{ $pinjam_ktm->nama_alat }}" name="nama_alat" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="kondisi">Kondisi</label>
                             <select class="form-control" id="kondisi" name="kondisi" required autofocus >
-                            @if ($data_pinjam_koin->count())
-                                <option value="{{ $pinjam_koin->kondisi }}" {{ $selectedStatus == $pinjam_koin->no_alat ? 'selected="selected"' : '' }}>{{ $pinjam_koin->kondisi}}</option>
-                                @if ($pinjam_koin->kondisi =="Bagus")
+                            @if ($data_pinjam_ktm->count())
+                                <option value="{{ $pinjam_ktm->kondisi }}" {{ $selectedStatus == $pinjam_ktm->no_alat ? 'selected="selected"' : '' }}>{{ $pinjam_ktm->kondisi}}</option>
+                                @if ($pinjam_ktm->kondisi =="Bagus")
                                     <option value="Proses">Proses</option>
                                     <option value="Rusak">Rusak</option>
-                                @elseif ($pinjam_koin->kondisi =="Rusak")
+                                @elseif ($pinjam_ktm->kondisi =="Rusak")
                                     <option value="Bagus">Bagus</option>
                                     <option value="Proses">Proses</option>
-                                @elseif ($pinjam_koin->kondisi =="Proses")
+                                @elseif ($pinjam_ktm->kondisi =="Proses")
                                     <option value="Bagus">Bagus</option>
                                     <option value="Rusak">Rusak</option>
                                 @else
@@ -55,16 +55,16 @@
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea class="form-control" id="keterangan" name="keterangan" required>{{ $pinjam_koin->keterangan }}</textarea>
+                            <textarea class="form-control" id="keterangan" name="keterangan" required>{{ $pinjam_ktm->keterangan }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status" required>
-                                @if ($data_pinjam_koin->count())
-                                    <option value="{{ $pinjam_koin->status }}" {{ $selectedStatus == $pinjam_koin->no_alat ? 'selected="selected"' : '' }}>{{ $pinjam_koin->status }}</option>
-                                    @if ($pinjam_koin->status == "Sudah Dikembalikan")
+                                @if ($data_pinjam_ktm->count())
+                                    <option value="{{ $pinjam_ktm->status }}" {{ $selectedStatus == $pinjam_ktm->no_alat ? 'selected="selected"' : '' }}>{{ $pinjam_ktm->status }}</option>
+                                    @if ($pinjam_ktm->status == "Sudah Dikembalikan")
                                         <option value="Dipinjam">Dipinjam</option>
-                                    @elseif ($pinjam_koin->status == "Dipinjam")
+                                    @elseif ($pinjam_ktm->status == "Dipinjam")
                                         <option value="Sudah Dikembalikan">Sudah Dikembalikan</option>
                                     @else
                                         <option value="Sudah Dikembalikan">Sudah Dikembalikan</option>
@@ -80,13 +80,13 @@
                         <div class="form-group">
                             <label for="total_menit_pinjam">Kalibrasi</label>
                             <input type="hidden" class="form-control" id="total_jam_pinjam" name="total_jam_pinjam" readonly required>
-                            <input type="number" class="form-control" id="total_menit_pinjam" name="total_menit_pinjam" value="{{ $pinjam_koin->total_menit_pinjam }}" readonly required>
+                            <input type="number" class="form-control" id="total_menit_pinjam" name="total_menit_pinjam" value="{{ $pinjam_ktm->total_menit_pinjam }}" readonly required>
                         </div>
-
+                        
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-md btn-primary" id="btn_kembalikan">Kembalikan</button>
-                            <a href="/pinjam_koin" class=" btn btn-md btn-danger">Batalkan</a>
+                            <a href="/pinjam_ktm" class=" btn btn-md btn-danger">Batalkan</a>
                         </div>
                     </form>
                 @endforeach

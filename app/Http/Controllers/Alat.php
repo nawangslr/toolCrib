@@ -58,7 +58,7 @@ class Alat extends Controller
         $data_alat->kondisi_akhir = $request->kondisi_akhir;
         $data_alat->nama_petugas = $request->nama_petugas;
         $data_alat->status = $request->status;
-        $data_alat->jam_pakai = $request->jam_pakai;
+        $data_alat->kalibrasi = $request->kalibrasi;
         $data_alat->save();
         return redirect('alat')->with('alert-success', 'Data Alat Berhasil Ditambahkan.');
         
@@ -122,9 +122,9 @@ class Alat extends Controller
         $data_alat->kondisi_akhir = $request->kondisi_akhir;
         $data_alat->nama_petugas = $request->nama_petugas;
         $data_alat->status = $request->status;
-        $data_alat->jam_pakai = $request->jam_pakai;
+        $data_alat->kalibrasi = $request->kalibrasi;
         $data_alat->save();
-        return redirect()->route('alat.index')->with('alert-success','Data Alat Berhasil Diperbaharui!');
+        return redirect()->route('alat.index')->with('alert-success','Data Alat Berhasil Diubah!');
     }
 
     /**
