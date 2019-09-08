@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ModelUser;
+use App\ModelKategoriAlat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -15,7 +16,8 @@ class User extends Controller
             return redirect('login')->with('alert','Anda Harus Melakukan Login.');
         }
         else{
-            return view('user');
+            $alats = ModelKategoriAlat::all();
+            return view('user', compact('alats'));
         }
     }
 

@@ -63,6 +63,18 @@
                     </form>
                 </div>
             </div>
+
+            <!-- 
+                Kalo mau manggil kebalikannya (misal dair alat ke kategori alatnya, tinggal nama_objek_dari_model_alat->kategori  , dmna kategori adalah method tambahan, lihat di model nya)
+             -->
+
+            <h6 class="text-mute mt-3">Daftar Alat tersedia</h6>
+                @foreach($alats as $item)
+                <div class="col-md-6 card mt-3">
+                    {{$item->jenis_alat}} - {{ $item->alat->where('status', '!=', 'Dipinjam')->where('status', '!=', 'Dipinjam untuk PA')->count() }}
+                </div>
+                @endforeach
+            <br>
         <!-- /.content -->
     </section>
     <!-- /.main-section -->
